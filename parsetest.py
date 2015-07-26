@@ -16,6 +16,11 @@ def parse_format(src):
 
         if line.startswith('  '):
             # comment line
+            if not rv:
+                raise SyntaxError('Cannot have comment before first entry',
+                                  n, line)
+
+            rv[-1]['comments'].append(line[2:])
             continue
 
         fields = shlex.split(line, posix=True)
