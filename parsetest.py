@@ -67,4 +67,5 @@ mobile.pin: 12345
 """
 
 
-print parse_format(sample)
+from pprint import pprint
+pprint(parse_format(sample))
