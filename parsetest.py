@@ -20,15 +20,18 @@ def parse_format(src):
 
         fields = shlex.split(line, posix=True)
 
-        entry = {}
-
         if len(fields) == 1:
             raise SyntaxError('Missing password', n, line)
 
         if len(fields) > 3:
             raise SyntaxError('Too many entries', n, line)
 
+        entry = {}
+        if not fields[0].endswith(':'):
+            raise SyntaxError('Key must end with colon (:)', n, line)
+
         entry['key'] = fields[0]
+
         entry['username'] = None
         if len(fields) == 2:
             entry['password'] = fields[1]
@@ -43,18 +46,18 @@ def parse_format(src):
 
 
 sample = r"""
-.an_old_entry_that_is_ignored foo bar
+.an_old_entry_that_is_ignored: foo bar
 
-mail.google first-user@gmail.com "*****"
+mail.google: first-user@gmail.com "*****"
   see https://mail.google.com/
 
-mail.google second-user@gmail.com "*****"
+mail.google: second-user@gmail.com "*****"
   John's account
 
-ssh.my_private_server root "*****"
+ssh.my_private_server: root "*****"
   with great power comes great responsibility.
 
-mobile.pin 12345
+mobile.pin: 12345
 """
 
 
