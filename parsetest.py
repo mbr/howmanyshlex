@@ -59,6 +59,7 @@ mail.google: first-user@gmail.com "*****"
 
 mail.google: second-user@gmail.com "*****"
   John's account
+  Also, a second line
 
 ssh.my_private_server: root "*****"
   with great power comes great responsibility.
