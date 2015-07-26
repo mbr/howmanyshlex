@@ -25,16 +25,13 @@ def parse_format(src):
             raise SyntaxError('Missing password', n, line)
 
         if len(fields) > 3:
-            # check if the extra fields are comments
-            if fields[3] != '#':
-                raise SyntaxError('Too many fields, expected comment')
-
-            entry['comment'] = [' '.join(fields[4:])]
+            raise SyntaxError('Too many fields, expected comment', n, line)
 
         if not fields[0].endswith(':'):
             raise SyntaxError('Key must end with colon (:)', n, line)
 
         entry['key'] = fields[0]
+        entry['comments'] = []
 
         entry['username'] = None
         if len(fields) == 2:
@@ -65,16 +62,4 @@ mobile.pin: 12345
 """
 
 
-sample2 = r"""
-.an_old_entry_that_is_ignored: foo bar
-mail.google: first-user@gmail.com "*****"  # see https://mail.google.com/
-mail.google: second-user@gmail.com "*****"  # John's account
-ssh.my_private_server: root "*****"
-  with great power comes great responsibility
-  and some other crappy freeform information
-mobile.pin: 12345
-"""
-
-
 print parse_format(sample)
-print parse_format(sample2)
